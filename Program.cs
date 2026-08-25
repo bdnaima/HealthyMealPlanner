@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using HealthyMealPlanner.API.Data;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
+
+
 // Add services to the container.
+builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -21,10 +25,14 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();
 
+app.MapControllers();
+
 app.MapGet("/", () => "Healthy Meal Planner API is running!");
 
 app.Run();
+
