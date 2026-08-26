@@ -36,4 +36,54 @@ public class CategoriesController : ControllerBase
             category
         );
     }
+
+    // PUT: api/categories/5
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateCategory(int id, Category category)
+    {
+        if (id != category.CategoryId)
+        {
+            return BadRequest();
+        }
+
+        _context.Entry(category).State = EntityState.Modified;
+
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!CategoryExists(id))
+            {
+                return NotFound();
+            }
+
+            throw;
+        }
+
+        return NoContent();
+    }
+
+    private bool CategoryExists(int id)
+    {
+        return _context.Categories.Any(e => e.CategoryId == id);
+    }
+
+    // DELETE: api/categories/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteCategory(int id)
+    {
+        var category = await _context.Categories.FindAsync(id);
+
+        if (category == null)
+        {
+            return NotFound();
+        }
+
+        _context.Categories.Remove(category);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
 }

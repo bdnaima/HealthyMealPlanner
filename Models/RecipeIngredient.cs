@@ -12,7 +12,7 @@ public class RecipeIngredient
 
     public string? Unit { get; set; }
 
-    public Recipe Recipe { get; set; } = null!;
+    public Recipe? Recipe { get; set; } = null!;
 
-    public Food Food { get; set; } = null!;
+    public Food? Food { get; set; } = null!;
 }

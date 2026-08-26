@@ -12,7 +12,7 @@ public class PlannedMeal
 
     public string? MealType { get; set; }
 
-    public MealPlan MealPlan { get; set; } = null!;
+    public MealPlan? MealPlan { get; set; } = null!;
 
-    public Recipe Recipe { get; set; } = null!;
+    public Recipe? Recipe { get; set; } = null!;
 }

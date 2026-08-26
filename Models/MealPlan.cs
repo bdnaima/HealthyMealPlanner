@@ -12,5 +12,5 @@ public class MealPlan
 
     public DateTime? EndDate { get; set; }
 
-    public User User { get; set; } = null!;
+    public User? User { get; set; } = null!;
 }

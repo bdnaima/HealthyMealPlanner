@@ -12,5 +12,5 @@ public class User
 
     public string PasswordHash { get; set; } = string.Empty;
 
-    public Role Role { get; set; } = null!;
+    public Role? Role { get; set; } = null!;
 }
