@@ -1,5 +1,6 @@
 using HealthyMealPlanner.API.Data;
 using HealthyMealPlanner.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,10 +21,11 @@ public class CategoriesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
     {
-        return await _context.Categories.ToListAsync();
+        return await _context.Categories.Include(c => c.Recipes).ToListAsync();
     }
 
     // POST: api/categories
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<Category>> CreateCategory(Category category)
     {
@@ -38,6 +40,7 @@ public class CategoriesController : ControllerBase
     }
 
     // PUT: api/categories/5
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateCategory(int id, Category category)
     {
@@ -71,6 +74,7 @@ public class CategoriesController : ControllerBase
     }
 
     // DELETE: api/categories/5
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCategory(int id)
     {

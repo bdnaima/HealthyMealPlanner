@@ -18,5 +18,5 @@ public class Recipe
 
     public int? Calories { get; set; }
 
-    public Category Category { get; set; } = null!;
+    public Category? Category { get; set; } = null!;
 }

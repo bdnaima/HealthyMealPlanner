@@ -1,7 +1,11 @@
 using HealthyMealPlanner.API.Data;
 using HealthyMealPlanner.API.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+
 
 namespace HealthyMealPlanner.API.Controllers;
 
@@ -28,6 +32,7 @@ public class RecipesController : ControllerBase
     }
 
     // POST: api/recipes
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<Recipe>> CreateRecipe(Recipe recipe)
     {
@@ -42,6 +47,7 @@ public class RecipesController : ControllerBase
     }
 
     // PUT: api/recipes/5
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateRecipe(int id, Recipe recipe)
     {
@@ -75,6 +81,7 @@ public class RecipesController : ControllerBase
     }
 
     // DELETE: api/recipes/5
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteRecipe(int id)
     {
