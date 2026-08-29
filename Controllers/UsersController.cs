@@ -20,14 +20,14 @@ public class UsersController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<User>>> GetUsers()
     {
-        return await _context.Users.ToListAsync();
+        return await _context.ApplicationUsers.ToListAsync();
     }
 
     // POST: api/users
     [HttpPost]
     public async Task<ActionResult<User>> CreateUser(User user)
     {
-        _context.Users.Add(user);
+        _context.ApplicationUsers.Add(user);
         await _context.SaveChangesAsync();
 
         return CreatedAtAction(
@@ -67,21 +67,21 @@ public class UsersController : ControllerBase
 
     private bool UserExists(int id)
     {
-        return _context.Users.Any(e => e.UserId == id);
+        return _context.ApplicationUsers.Any(e => e.UserId == id);
     }
 
     // DELETE: api/users/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUser(int id)
     {
-        var user = await _context.Users.FindAsync(id);
+        var user = await _context.ApplicationUsers.FindAsync(id);
 
         if (user == null)
         {
             return NotFound();
         }
 
-        _context.Users.Remove(user);
+        _context.ApplicationUsers.Remove(user);
         await _context.SaveChangesAsync();
 
         return NoContent();

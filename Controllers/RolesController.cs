@@ -20,14 +20,14 @@ public class RolesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
     {
-        return await _context.Roles.ToListAsync();
+        return await _context.ApplicationRoles.ToListAsync();
     }
 
     // POST: api/roles
     [HttpPost]
     public async Task<ActionResult<Role>> CreateRole(Role role)
     {
-        _context.Roles.Add(role);
+        _context.ApplicationRoles.Add(role);
         await _context.SaveChangesAsync();
 
         return CreatedAtAction(
@@ -67,21 +67,21 @@ public class RolesController : ControllerBase
 
     private bool RoleExists(int id)
     {
-        return _context.Roles.Any(e => e.RoleId == id);
+        return _context.ApplicationRoles.Any(e => e.RoleId == id);
     }
 
     // DELETE: api/roles/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteRole(int id)
     {
-        var role = await _context.Roles.FindAsync(id);
+        var role = await _context.ApplicationRoles.FindAsync(id);
 
         if (role == null)
         {
             return NotFound();
         }
 
-        _context.Roles.Remove(role);
+        _context.ApplicationRoles.Remove(role);
         await _context.SaveChangesAsync();
 
         return NoContent();
