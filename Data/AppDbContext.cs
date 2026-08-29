@@ -11,9 +11,6 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
-    public DbSet<Role> ApplicationRoles { get; set; }
-    public DbSet<User> ApplicationUsers { get; set; }
-    public DbSet<MealPlan> MealPlans { get; set; }
     public DbSet<PlannedMeal> PlannedMeals { get; set; }
     public DbSet<Recipe> Recipes { get; set; }
     public DbSet<Category> Categories { get; set; }

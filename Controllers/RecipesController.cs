@@ -20,7 +20,11 @@ public class RecipesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
     {
-        return await _context.Recipes.ToListAsync();
+        return await _context.Recipes
+            .Include(r => r.Category)
+            .Include(r => r.Ingredients)
+            .ThenInclude(ri => ri.Food)
+            .ToListAsync();
     }
 
     // POST: api/recipes

@@ -1,7 +1,10 @@
 using HealthyMealPlanner.API.Data;
 using HealthyMealPlanner.API.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace HealthyMealPlanner.API.Controllers;
 
@@ -17,16 +20,36 @@ public class PlannedMealsController : ControllerBase
     }
 
     // GET: api/plannedmeals
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PlannedMeal>>> GetPlannedMeals()
     {
-        return await _context.PlannedMeals.ToListAsync();
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
+        return await _context.PlannedMeals
+            .Where(pm => pm.UserId == userId)
+            .Include(pm => pm.Recipe)
+            .ThenInclude(r => r.Category)
+            .ToListAsync();
     }
 
     // POST: api/plannedmeals
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<PlannedMeal>> CreatePlannedMeal(PlannedMeal plannedMeal)
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
+        plannedMeal.UserId = userId;
+
         _context.PlannedMeals.Add(plannedMeal);
         await _context.SaveChangesAsync();
 
@@ -38,9 +61,16 @@ public class PlannedMealsController : ControllerBase
     }
 
     // PUT: api/plannedmeals/5
+    [Authorize]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdatePlannedMeal(int id, PlannedMeal plannedMeal)
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
         if (id != plannedMeal.PlannedMealId)
         {
             return BadRequest();
@@ -71,9 +101,16 @@ public class PlannedMealsController : ControllerBase
     }
 
     // DELETE: api/plannedmeals/5
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePlannedMeal(int id)
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
         var plannedMeal = await _context.PlannedMeals.FindAsync(id);
 
         if (plannedMeal == null)

@@ -4,6 +4,7 @@ using HealthyMealPlanner.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthyMealPlanner.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260829191530_RemoveMealPlan")]
+    partial class RemoveMealPlan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -355,7 +358,7 @@ namespace HealthyMealPlanner.API.Migrations
             modelBuilder.Entity("HealthyMealPlanner.API.Models.PlannedMeal", b =>
                 {
                     b.HasOne("HealthyMealPlanner.API.Models.Recipe", "Recipe")
-                        .WithMany()
+                        .WithMany("PlannedMeals")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -452,6 +455,11 @@ namespace HealthyMealPlanner.API.Migrations
             modelBuilder.Entity("HealthyMealPlanner.API.Models.Food", b =>
                 {
                     b.Navigation("RecipeIngredients");
+                });
+
+            modelBuilder.Entity("HealthyMealPlanner.API.Models.Recipe", b =>
+                {
+                    b.Navigation("PlannedMeals");
                 });
 #pragma warning restore 612, 618
         }

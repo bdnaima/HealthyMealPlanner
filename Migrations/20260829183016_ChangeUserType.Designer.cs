@@ -4,6 +4,7 @@ using HealthyMealPlanner.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthyMealPlanner.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260829183016_ChangeUserType")]
+    partial class ChangeUserType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,6 +135,33 @@ namespace HealthyMealPlanner.API.Migrations
                     b.ToTable("Foods");
                 });
 
+            modelBuilder.Entity("HealthyMealPlanner.API.Models.MealPlan", b =>
+                {
+                    b.Property<int>("MealPlanId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("MealPlanId"));
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("MealPlanId");
+
+                    b.ToTable("MealPlans");
+                });
+
             modelBuilder.Entity("HealthyMealPlanner.API.Models.PlannedMeal", b =>
                 {
                     b.Property<int>("PlannedMealId")
@@ -143,14 +173,18 @@ namespace HealthyMealPlanner.API.Migrations
                     b.Property<DateTime>("MealDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("MealPlanId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MealType")
+                        .HasColumnType("longtext");
+
                     b.Property<int>("RecipeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.HasKey("PlannedMealId");
+
+                    b.HasIndex("MealPlanId");
 
                     b.HasIndex("RecipeId");
 
@@ -354,11 +388,19 @@ namespace HealthyMealPlanner.API.Migrations
 
             modelBuilder.Entity("HealthyMealPlanner.API.Models.PlannedMeal", b =>
                 {
-                    b.HasOne("HealthyMealPlanner.API.Models.Recipe", "Recipe")
+                    b.HasOne("HealthyMealPlanner.API.Models.MealPlan", "MealPlan")
                         .WithMany()
+                        .HasForeignKey("MealPlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HealthyMealPlanner.API.Models.Recipe", "Recipe")
+                        .WithMany("PlannedMeals")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("MealPlan");
 
                     b.Navigation("Recipe");
                 });
@@ -452,6 +494,11 @@ namespace HealthyMealPlanner.API.Migrations
             modelBuilder.Entity("HealthyMealPlanner.API.Models.Food", b =>
                 {
                     b.Navigation("RecipeIngredients");
+                });
+
+            modelBuilder.Entity("HealthyMealPlanner.API.Models.Recipe", b =>
+                {
+                    b.Navigation("PlannedMeals");
                 });
 #pragma warning restore 612, 618
         }

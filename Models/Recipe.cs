@@ -8,6 +8,8 @@ public class Recipe
 
     public string RecipeName { get; set; } = string.Empty;
 
+    public List<RecipeIngredient> Ingredients { get; set; } = new List<RecipeIngredient>();
+
     public string? Description { get; set; }
 
     public string? Instructions { get; set; }
@@ -16,7 +18,5 @@ public class Recipe
 
     public int? Calories { get; set; }
 
-    public Category? Category { get; set; } = null!;
-
-    public ICollection<PlannedMeal> PlannedMeals { get; set; } = new List<PlannedMeal>();
+    public Category Category { get; set; } = null!;
 }
