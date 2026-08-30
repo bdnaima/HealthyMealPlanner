@@ -55,7 +55,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// CORS because we want to allow our React frontend to communicate with this API
+// CORS because we want to allow our React frontend to communicate with this API    
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactFrontend", policy =>
