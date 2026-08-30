@@ -55,6 +55,18 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// CORS because we want to allow our React frontend to communicate with this API
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ReactFrontend", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -67,6 +79,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("ReactFrontend");
 
 app.UseAuthentication();
 app.UseAuthorization();
