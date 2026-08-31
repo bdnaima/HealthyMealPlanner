@@ -37,28 +37,37 @@ public class PlannedMealsController : ControllerBase
             .ToListAsync();
     }
 
-    // POST: api/plannedmeals
-    [Authorize]
-    [HttpPost]
-    public async Task<ActionResult<PlannedMeal>> CreatePlannedMeal(PlannedMeal plannedMeal)
+// POST: api/plannedmeals
+[Authorize]
+[HttpPost]
+public async Task<ActionResult<PlannedMeal>> CreatePlannedMeal(
+    PlannedMeal plannedMeal)
+{
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+    if (userId == null)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (userId == null)
-        {
-            return Unauthorized();
-        }
-
-        plannedMeal.UserId = userId;
-
-        _context.PlannedMeals.Add(plannedMeal);
-        await _context.SaveChangesAsync();
-
-        return CreatedAtAction(
-            nameof(GetPlannedMeals),
-            new { id = plannedMeal.PlannedMealId },
-            plannedMeal
-        );
+        return Unauthorized();
     }
+
+    plannedMeal.UserId = userId;
+
+    _context.PlannedMeals.Add(plannedMeal);
+
+    await _context.SaveChangesAsync();
+
+    var createdMeal = await _context.PlannedMeals
+        .Where(pm => pm.PlannedMealId == plannedMeal.PlannedMealId)
+        .Include(pm => pm.Recipe)
+        .ThenInclude(r => r.Category)
+        .FirstOrDefaultAsync();
+
+    return CreatedAtAction(
+        nameof(GetPlannedMeals),
+        new { id = plannedMeal.PlannedMealId },
+        createdMeal
+    );
+}
 
     // PUT: api/plannedmeals/5
     [Authorize]
