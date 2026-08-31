@@ -243,6 +243,85 @@ export async function getFoods(token) {
     return response.json();
 }
 
+
+// Create a Food
+export async function createFood(food, token) {
+    const response = await fetch(
+        "http://localhost:5169/api/foods",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(food),
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to create food.");
+    }
+
+    return response.json();
+}
+
+
+// Update a Food
+export async function updateFood(id, food, token) {
+    const response = await fetch(
+        `http://localhost:5169/api/foods/${id}`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                foodId: Number(id),
+                foodName: food.foodName,
+                caloriesPer100g: food.caloriesPer100g
+                    ? Number(food.caloriesPer100g)
+                    : null,
+                proteinPer100g: food.proteinPer100g
+                    ? Number(food.proteinPer100g)
+                    : null,
+                carbsPer100g: food.carbsPer100g
+                    ? Number(food.carbsPer100g)
+                    : null,
+                fatPer100g: food.fatPer100g
+                    ? Number(food.fatPer100g)
+                    : null,
+            }),
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to update food.");
+    }
+
+    return response.status === 204
+        ? null
+        : response.json();
+}
+
+
+// Delete a Food
+export async function deleteFood(id, token) {
+    const response = await fetch(
+        `http://localhost:5169/api/foods/${id}`,
+        {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to delete food.");
+    }
+}
+
 // Create a Recipe Ingredient
 export async function createRecipeIngredient(
     ingredient,

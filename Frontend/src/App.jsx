@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -10,6 +9,7 @@ import CreateRecipe from "./pages/CreateRecipe";
 import EditRecipe from "./pages/EditRecipe";
 import RecipeDetails from "./pages/RecipeDetails";
 import MealPlanner from "./pages/MealPlanner";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   return (
@@ -25,6 +25,7 @@ function App() {
         <Route path="/admin/recipes/create" element={<CreateRecipe />} />
         <Route path="/admin/recipes/edit/:id" element={<EditRecipe />} />
         <Route path="/meal-planner" element={<MealPlanner />} />
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </BrowserRouter>
   );
