@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { getRecipes } from "../services/api";
+import { isAdmin } from "../services/auth";
+import { Link } from "react-router-dom";
 import RecipeCard from "../components/RecipeCard";
 import "./Recipes.css";
 
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
   const [error, setError] = useState("");
+  const admin = isAdmin();
 
   useEffect(() => {
     async function loadRecipes() {
@@ -26,6 +29,12 @@ function Recipes() {
         <h1>Recipes</h1>
         <p>Discover delicious and healthy recipes.</p>
       </header>
+
+      {admin && (
+        <Link to="/admin/recipes/create" className="create-recipe-link">
+          + Add Recipe
+        </Link>
+      )}
 
       {error && <p>{error}</p>}
 

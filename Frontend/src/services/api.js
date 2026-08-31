@@ -22,6 +22,79 @@ export async function getRecipe(id) {
     return response.json();
 }
 
+// Create a new recipe
+export async function createRecipe(recipe, token) {
+    const response = await fetch(
+        "http://localhost:5169/api/recipes",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(recipe),
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to create recipe.");
+    }
+
+    return response.json();
+}
+
+// Update a recipe
+export async function updateRecipe(id, recipe, token) {
+    const response = await fetch(
+        `http://localhost:5169/api/recipes/${id}`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                recipeId: Number(id),
+                categoryId: Number(recipe.categoryId),
+                recipeName: recipe.recipeName,
+                description: recipe.description,
+                instructions: recipe.instructions,
+                prepTime: recipe.prepTime
+                    ? Number(recipe.prepTime)
+                    : null,
+                calories: recipe.calories
+                    ? Number(recipe.calories)
+                    : null,
+            }),
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to update recipe.");
+    }
+
+    return response.status === 204
+        ? null
+        : response.json();
+}
+
+// Delete a recipe
+export async function deleteRecipe(id, token) {
+    const response = await fetch(
+        `http://localhost:5169/api/recipes/${id}`,
+        {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to delete recipe.");
+    }
+}
+
 // Register a new user
 export async function registerUser(email, password) {
     const response = await fetch(`${API_URL}/account/register`, {
@@ -137,4 +210,17 @@ export async function deletePlannedMeal(id, token) {
     if (!response.ok) {
         throw new Error("Failed to delete meal");
     }
+}
+
+// Get all categories
+export async function getCategories() {
+    const response = await fetch(
+        "http://localhost:5169/api/categories"
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch categories.");
+    }
+
+    return response.json();
 }
