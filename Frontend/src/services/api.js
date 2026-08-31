@@ -25,7 +25,7 @@ export async function getRecipe(id) {
 // Create a new recipe
 export async function createRecipe(recipe, token) {
     const response = await fetch(
-        "http://localhost:5169/api/recipes",
+        `${API_URL}/recipes`,
         {
             method: "POST",
             headers: {
@@ -46,7 +46,7 @@ export async function createRecipe(recipe, token) {
 // Update a recipe
 export async function updateRecipe(id, recipe, token) {
     const response = await fetch(
-        `http://localhost:5169/api/recipes/${id}`,
+        `${API_URL}/recipes/${id}`,
         {
             method: "PUT",
             headers: {
@@ -81,7 +81,7 @@ export async function updateRecipe(id, recipe, token) {
 // Delete a recipe
 export async function deleteRecipe(id, token) {
     const response = await fetch(
-        `http://localhost:5169/api/recipes/${id}`,
+        `${API_URL}/recipes/${id}`,
         {
             method: "DELETE",
             headers: {
@@ -215,7 +215,7 @@ export async function deletePlannedMeal(id, token) {
 // Get all categories
 export async function getCategories() {
     const response = await fetch(
-        "http://localhost:5169/api/categories"
+        `${API_URL}/categories`
     );
 
     if (!response.ok) {
@@ -223,4 +223,63 @@ export async function getCategories() {
     }
 
     return response.json();
+}
+
+// Get all foods
+export async function getFoods(token) {
+    const response = await fetch(
+        `${API_URL}/foods`,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch foods.");
+    }
+
+    return response.json();
+}
+
+// Create a Recipe Ingredient
+export async function createRecipeIngredient(
+    ingredient,
+    token
+) {
+    const response = await fetch(
+        `${API_URL}/recipeingredients`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(ingredient),
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to add ingredient.");
+    }
+
+    return response.json();
+}
+
+// Delete a Recipe Ingredient
+export async function deleteRecipeIngredient(id, token) {
+    const response = await fetch(
+        `${API_URL}/recipeingredients/${id}`,
+        {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to delete ingredient.");
+    }
 }

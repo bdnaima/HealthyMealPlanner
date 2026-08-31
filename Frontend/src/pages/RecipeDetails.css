@@ -118,6 +118,133 @@
   color: #b04a3a;
 }
 
+.ingredients-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.add-ingredient-button {
+  border: none;
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+
+  background-color: #315c4c;
+  color: white;
+
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-ingredient-button:hover {
+  background-color: #264a3d;
+}
+
+.ingredient-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex: 1;
+}
+
+.delete-ingredient-button {
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem 0.75rem;
+
+  background-color: #f5e2d4;
+  color: #a64f43;
+
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.delete-ingredient-button:hover {
+  background-color: #edd1bf;
+}
+
+.ingredient-form {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+
+  background-color: #f7f3ea;
+  border-radius: 14px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ingredient-form h3 {
+  margin: 0;
+  color: #315c4c;
+}
+
+.ingredient-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  color: #315c4c;
+  font-weight: 600;
+}
+
+.ingredient-form input,
+.ingredient-form select {
+  padding: 0.7rem;
+
+  border: 1px solid #d8d1c4;
+  border-radius: 9px;
+
+  background-color: #fffdf8;
+  font: inherit;
+  color: #4f4a43;
+}
+
+.ingredient-form-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.save-ingredient-button,
+.cancel-ingredient-button {
+  border: none;
+  border-radius: 9px;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.save-ingredient-button {
+  background-color: #315c4c;
+  color: white;
+}
+
+.cancel-ingredient-button {
+  background-color: #e5dfd2;
+  color: #4f4a43;
+}
+
+@media (max-width: 600px) {
+  .ingredients-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .ingredient-info {
+    flex-direction: column;
+  }
+
+  .delete-ingredient-button {
+    align-self: flex-start;
+  }
+
+  .ingredient-form-actions {
+    flex-direction: column;
+  }
+}
+
 @media (max-width: 600px) {
   .recipe-details-page {
     padding: 2rem 1rem;
