@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Recipes from "./pages/Recipes";
+import RecipeDetails from "./pages/RecipeDetails";
 import MealPlanner from "./pages/MealPlanner";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/recipes" element={<Recipes />} />
+        <Route path="/recipes/:id" element={<RecipeDetails />} />
         <Route path="/meal-planner" element={<MealPlanner />} />
       </Routes>
     </BrowserRouter>

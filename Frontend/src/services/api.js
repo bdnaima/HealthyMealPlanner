@@ -11,6 +11,17 @@ export async function getRecipes() {
     return response.json();
 }
 
+// Get a single recipe by ID
+export async function getRecipe(id) {
+    const response = await fetch(`${API_URL}/recipes/${id}`);
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch recipe");
+    }
+
+    return response.json();
+}
+
 // Register a new user
 export async function registerUser(email, password) {
     const response = await fetch(`${API_URL}/account/register`, {

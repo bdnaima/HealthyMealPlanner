@@ -31,6 +31,22 @@ public class RecipesController : ControllerBase
             .ToListAsync();
     }
 
+    // GET: api/recipes/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Recipe>> GetRecipe(int id)
+    {
+        var recipe = await _context.Recipes
+            .Include(r => r.Category)
+            .FirstOrDefaultAsync(r => r.RecipeId == id);
+
+        if (recipe == null)
+        {
+            return NotFound();
+        }
+
+        return recipe;
+    }
+
     // POST: api/recipes
     [Authorize(Roles = "Admin")]
     [HttpPost]
