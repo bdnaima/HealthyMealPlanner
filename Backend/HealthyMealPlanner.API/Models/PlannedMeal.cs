@@ -6,5 +6,5 @@ public class PlannedMeal
     public string UserId { get; set; } = string.Empty;
     public int RecipeId { get; set; }
     public DateTime MealDate { get; set; }
-    public Recipe Recipe { get; set; } = null!;
+    public Recipe? Recipe { get; set; } = null!;
 }

@@ -32,11 +32,14 @@ public class RecipesController : ControllerBase
     }
 
     // GET: api/recipes/5
+
     [HttpGet("{id}")]
     public async Task<ActionResult<Recipe>> GetRecipe(int id)
     {
         var recipe = await _context.Recipes
             .Include(r => r.Category)
+            .Include(r => r.Ingredients)
+                .ThenInclude(i => i.Food)
             .FirstOrDefaultAsync(r => r.RecipeId == id);
 
         if (recipe == null)
@@ -44,7 +47,40 @@ public class RecipesController : ControllerBase
             return NotFound();
         }
 
-        return recipe;
+        return Ok(new
+        {
+            recipe.RecipeId,
+            recipe.RecipeName,
+            recipe.Description,
+            recipe.Instructions,
+            recipe.PrepTime,
+            recipe.Calories,
+
+            category = recipe.Category == null
+            ? null
+            : new
+            {
+                recipe.Category.CategoryId,
+                recipe.Category.CategoryName
+            },
+
+            ingredients = recipe.Ingredients.Select(i => new
+            {
+                i.RecipeIngredientId,
+                i.Quantity,
+                i.Unit,
+
+                food = new
+                {
+                    i.Food.FoodId,
+                    i.Food.FoodName,
+                    i.Food.CaloriesPer100g,
+                    i.Food.ProteinPer100g,
+                    i.Food.CarbsPer100g,
+                    i.Food.FatPer100g
+                }
+            })
+        });
     }
 
     // POST: api/recipes

@@ -88,3 +88,53 @@ export async function testAuth() {
 
     return data;
 }
+
+// Get Planned Meals
+export async function getPlannedMeals(token) {
+    const response = await fetch(`${API_URL}/plannedmeals`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch planned meals");
+    }
+
+    return response.json();
+}
+
+// Create a Planned Meal
+export async function createPlannedMeal(recipeId, mealDate, token) {
+    const response = await fetch(`${API_URL}/plannedmeals`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            recipeId,
+            mealDate,
+        }),
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to add meal");
+    }
+
+    return response.json();
+}
+
+// Delete a Planned Meal
+export async function deletePlannedMeal(id, token) {
+    const response = await fetch(`${API_URL}/plannedmeals/${id}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to delete meal");
+    }
+}
