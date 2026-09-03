@@ -5,6 +5,8 @@ public class Recipe
     public int RecipeId { get; set; }
 
     public int CategoryId { get; set; }
+    
+    public string? ImageUrl { get; set; }
 
     public string RecipeName { get; set; } = string.Empty;
 

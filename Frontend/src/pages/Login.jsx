@@ -21,7 +21,7 @@ function Login() {
 
       localStorage.setItem("token", data.token);
 
-      navigate("/");
+      navigate("/recipes");
       window.location.reload();
     } catch (error) {
       setError(error.message);
@@ -36,7 +36,6 @@ function Login() {
         <div className="auth-header">
           {" "}
           <span className="auth-icon">🥗</span>
-          ```
           <h1>Welcome Back</h1>
           <p>Log in to continue planning delicious and healthy meals.</p>
         </div>

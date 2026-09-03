@@ -30,6 +30,7 @@ function RecipeDetails() {
     async function loadRecipe() {
       try {
         const data = await getRecipe(id);
+
         setRecipe(data);
       } catch (error) {
         setError(error.message);
@@ -102,7 +103,7 @@ function RecipeDetails() {
     const token = localStorage.getItem("token");
 
     try {
-      const newIngredient = await createRecipeIngredient(
+      await createRecipeIngredient(
         {
           recipeId: recipe.recipeId,
           foodId: Number(ingredient.foodId),
@@ -112,10 +113,8 @@ function RecipeDetails() {
         token,
       );
 
-      setRecipe((currentRecipe) => ({
-        ...currentRecipe,
-        ingredients: [...(currentRecipe.ingredients || []), newIngredient],
-      }));
+      const updatedRecipe = await getRecipe(id);
+      setRecipe(updatedRecipe);
 
       setIngredient({
         foodId: "",
@@ -286,6 +285,11 @@ function RecipeDetails() {
                 </div>
               </form>
             )}
+          </section>
+
+          <section className="recipe-details-section">
+            <h2>Instructions</h2>
+            <p className="recipe-instructions">{recipe.instructions}</p>
           </section>
 
           <section className="add-to-plan">

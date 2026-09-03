@@ -19,7 +19,11 @@ export async function getRecipe(id) {
         throw new Error("Failed to fetch recipe");
     }
 
-    return response.json();
+    const data = await response.json();
+
+    console.log("Recipe from API:", data);
+
+    return data;
 }
 
 // Create a new recipe
@@ -65,6 +69,7 @@ export async function updateRecipe(id, recipe, token) {
                 calories: recipe.calories
                     ? Number(recipe.calories)
                     : null,
+                imageUrl: recipe.imageUrl || null,
             }),
         }
     );

@@ -32,7 +32,6 @@ public class RecipesController : ControllerBase
     }
 
     // GET: api/recipes/5
-
     [HttpGet("{id}")]
     public async Task<ActionResult<Recipe>> GetRecipe(int id)
     {

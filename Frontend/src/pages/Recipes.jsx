@@ -4,6 +4,7 @@ import { isAdmin } from "../services/auth";
 import { Link } from "react-router-dom";
 import RecipeCard from "../components/RecipeCard";
 import "./Recipes.css";
+import "../index.css";
 
 function Recipes() {
   const [recipes, setRecipes] = useState([]);

@@ -32,7 +32,11 @@ function RecipeCard({ recipe }) {
   return (
     <article className="recipe-card">
       <div className="recipe-card-image">
-        <span>🍽️</span>
+        {recipe.imageUrl ? (
+          <img src={recipe.imageUrl} alt={recipe.recipeName} />
+        ) : (
+          <span>🍽️</span>
+        )}
       </div>
 
       <div className="recipe-card-content">

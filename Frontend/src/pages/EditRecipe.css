@@ -110,6 +110,22 @@
   color: #a64f43;
 }
 
+.edit-recipe-page select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d8d1c4;
+  border-radius: 10px;
+  background-color: #fffdf8;
+  color: #4f4a43;
+  font: inherit;
+  cursor: pointer;
+}
+
+.edit-recipe-page select:focus {
+  outline: none;
+  border-color: #315c4c;
+}
+
 @media (max-width: 600px) {
   .edit-recipe-page {
     padding: 2rem 1rem;
