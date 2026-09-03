@@ -448,11 +448,11 @@ export async function updateRecipeIngredient(id, ingredient, token) {
 // Delete a Recipe Ingredient
 export async function deleteRecipeIngredient(id, token) {
     const response = await fetch(
-        `${API_URL} /recipeingredients/${id} `,
+        `${API_URL}/recipeingredients/${id}`,
         {
             method: "DELETE",
             headers: {
-                Authorization: `Bearer ${token} `,
+                Authorization: `Bearer ${token}`,
             },
         }
     );

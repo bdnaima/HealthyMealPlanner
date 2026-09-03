@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.Text.Json.Serialization;
 
 
 namespace HealthyMealPlanner.API.Controllers;
@@ -22,14 +23,55 @@ public class RecipesController : ControllerBase
 
     // GET: api/recipes
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
-    {
-        return await _context.Recipes
-            .Include(r => r.Category)
-            .Include(r => r.Ingredients)
+    // GET: api/recipes
+[HttpGet]
+public async Task<ActionResult> GetRecipes()
+{
+    var recipes = await _context.Recipes
+        .Include(r => r.Category)
+        .Include(r => r.Ingredients)
             .ThenInclude(ri => ri.Food)
-            .ToListAsync();
-    }
+        .Select(r => new
+        {
+            r.RecipeId,
+            r.RecipeName,
+            r.Description,
+            r.Instructions,
+            r.PrepTime,
+            r.Calories,
+            r.ImageUrl,
+
+            category = r.Category == null
+                ? null
+                : new
+                {
+                    r.Category.CategoryId,
+                    r.Category.CategoryName
+                },
+
+            ingredients = r.Ingredients.Select(i => new
+            {
+                i.RecipeIngredientId,
+                i.Quantity,
+                i.Unit,
+
+                food = i.Food == null
+                    ? null
+                    : new
+                    {
+                        i.Food.FoodId,
+                        i.Food.FoodName,
+                        i.Food.CaloriesPer100g,
+                        i.Food.ProteinPer100g,
+                        i.Food.CarbsPer100g,
+                        i.Food.FatPer100g
+                    }
+            })
+        })
+        .ToListAsync();
+
+    return Ok(recipes);
+}
 
     // GET: api/recipes/5
     [HttpGet("{id}")]
