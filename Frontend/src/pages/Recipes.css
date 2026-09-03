@@ -26,6 +26,26 @@
   gap: 1.5rem;
 }
 
+.recipe-search {
+  margin-bottom: 2rem;
+}
+
+.recipe-search input {
+  width: 100%;
+  max-width: 450px;
+  padding: 0.85rem 1rem;
+  border: 1px solid #d8d1c4;
+  border-radius: 10px;
+  background-color: #fffdf8;
+  color: #4f4a43;
+  font-size: 1rem;
+}
+
+.recipe-search input:focus {
+  outline: none;
+  border-color: #315c4c;
+}
+
 @media (max-width: 900px) {
   .recipes-grid {
     grid-template-columns: repeat(2, 1fr);

@@ -8,6 +8,7 @@ import "../index.css";
 
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
   const admin = isAdmin();
 
@@ -23,6 +24,10 @@ function Recipes() {
 
     loadRecipes();
   }, []);
+
+  const filteredRecipes = recipes.filter((recipe) =>
+    recipe.recipeName.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
   return (
     <main className="recipes-page">
@@ -40,9 +45,16 @@ function Recipes() {
       {error && <p>{error}</p>}
 
       {recipes.length === 0 && !error && <p>No recipes found.</p>}
-
+      <div className="recipe-search">
+        <input
+          type="text"
+          placeholder="Search recipes..."
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
+      </div>
       <div className="recipes-grid">
-        {recipes.map((recipe) => (
+        {filteredRecipes.map((recipe) => (
           <RecipeCard key={recipe.recipeId} recipe={recipe} />
         ))}
       </div>

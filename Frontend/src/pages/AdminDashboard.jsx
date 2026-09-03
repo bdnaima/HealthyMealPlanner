@@ -26,7 +26,7 @@ function AdminDashboard() {
 
             <h2>Manage Recipes</h2>
 
-            <p>Create, edit and delete recipes.</p>
+            <p>For the admin: Create, edit and delete recipes.</p>
 
             <Link to="/recipes" className="admin-card-button">
               Manage Recipes

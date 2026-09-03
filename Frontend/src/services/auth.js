@@ -1,5 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 
+// This file is for handling user authentication
 export function getToken() {
     return localStorage.getItem("token");
 }

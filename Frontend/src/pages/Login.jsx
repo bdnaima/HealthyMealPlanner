@@ -21,7 +21,7 @@ function Login() {
 
       localStorage.setItem("token", data.token);
 
-      navigate("/recipes");
+      navigate("/");
       window.location.reload();
     } catch (error) {
       setError(error.message);

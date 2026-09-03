@@ -1,5 +1,7 @@
 const API_URL = "http://localhost:5169/api";
 
+// This file is for interacting with all recipe-related API endpoints
+
 // Get all recipes
 export async function getRecipes() {
     const response = await fetch(`${API_URL}/recipes`);
