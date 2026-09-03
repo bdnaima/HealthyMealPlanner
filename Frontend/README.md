@@ -255,7 +255,7 @@ Make sure you have installed:
 ### 1. Clone the repository
 
 ```bash
-git clone <https://github.com/bdnaima/HealthyMealPlanner.git>
+git clone https://github.com/bdnaima/HealthyMealPlanner.git
 cd HealthyMealPlanner
 ```
 
