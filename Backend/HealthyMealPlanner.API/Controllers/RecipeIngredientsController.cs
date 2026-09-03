@@ -22,7 +22,10 @@ public class RecipeIngredientsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<RecipeIngredient>>> GetRecipeIngredients()
     {
-        return await _context.RecipeIngredients.ToListAsync();
+        return await _context.RecipeIngredients
+            .Include(ri => ri.Recipe)
+            .Include(ri => ri.Food)
+            .ToListAsync();
     }
 
     // POST: api/recipeingredients

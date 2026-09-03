@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import {
   getPlannedMeals,
@@ -168,16 +169,25 @@ function MealPlanner() {
                       <h3>{meal.recipe?.recipeName}</h3>
 
                       <span className="meal-category">
-                        {meal.recipe?.category?.categoryName}
+                        {meal.recipe?.category?.categoryName || "No category"}
                       </span>
 
-                      <button
-                        type="button"
-                        className="remove-meal"
-                        onClick={() => handleDelete(meal.plannedMealId)}
-                      >
-                        Remove
-                      </button>
+                      <div className="planned-meal-actions">
+                        <Link
+                          to={`/recipes/${meal.recipe?.recipeId}`}
+                          className="view-meal-recipe"
+                        >
+                          View Recipe
+                        </Link>
+
+                        <button
+                          type="button"
+                          className="remove-meal"
+                          onClick={() => handleDelete(meal.plannedMealId)}
+                        >
+                          Remove
+                        </button>
+                      </div>
                     </div>
                   ))
                 )}

@@ -10,6 +10,9 @@ import EditRecipe from "./pages/EditRecipe";
 import RecipeDetails from "./pages/RecipeDetails";
 import MealPlanner from "./pages/MealPlanner";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminFoods from "./pages/AdminFoods";
+import AdminIngredients from "./pages/AdminIngredients";
+import AdminCategories from "./pages/AdminCategories";
 
 function App() {
   return (
@@ -26,6 +29,9 @@ function App() {
         <Route path="/admin/recipes/edit/:id" element={<EditRecipe />} />
         <Route path="/meal-planner" element={<MealPlanner />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/foods" element={<AdminFoods />} />
+        <Route path="/admin/ingredients" element={<AdminIngredients />} />
+        <Route path="/admin/categories" element={<AdminCategories />} />
       </Routes>
     </BrowserRouter>
   );

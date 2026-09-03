@@ -1,17 +1,18 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/api";
+import "./Login.css";
 
-const Login = () => {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+
   const navigate = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault();
-
     setError("");
     setMessage("");
 
@@ -21,53 +22,63 @@ const Login = () => {
       localStorage.setItem("token", data.token);
 
       navigate("/");
-    } catch (error) {
-      setError(error.message);
-    }
-  }
-
-  async function handleTestAuth() {
-    try {
-      const data = await testAuth();
-      setMessage(data);
-      setError("");
+      window.location.reload();
     } catch (error) {
       setError(error.message);
     }
   }
 
   return (
-    <div>
-      <h1>Login</h1>
-
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
+    <main className="auth-page">
+      {" "}
+      <div className="auth-card">
+        {" "}
+        <div className="auth-header">
+          {" "}
+          <span className="auth-icon">🥗</span>
+          ```
+          <h1>Welcome Back</h1>
+          <p>Log in to continue planning delicious and healthy meals.</p>
         </div>
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <label>
+            Email
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="you@example.com"
+              required
+            />
+          </label>
 
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-          />
+          <label>
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Enter your password"
+              required
+            />
+          </label>
+
+          {error && <p className="auth-error">{error}</p>}
+
+          {message && <p className="auth-success">{message}</p>}
+
+          <button type="submit" className="auth-button">
+            Login
+          </button>
+        </form>
+        <div className="auth-footer">
+          <p>
+            Don't have an account? <Link to="/register">Create one</Link>
+          </p>
         </div>
-
-        <button type="submit">Login</button>
-      </form>
-
-      {message && <p>{message}</p>}
-      {error && <p>{error}</p>}
-    </div>
+      </div>
+    </main>
   );
-};
+}
 
 export default Login;

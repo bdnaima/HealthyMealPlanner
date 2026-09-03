@@ -56,6 +56,18 @@ function AdminDashboard() {
               Manage Ingredients
             </Link>
           </div>
+
+          <div className="admin-card">
+            <div className="admin-card-icon">📂</div>
+
+            <h2>Manage Categories</h2>
+
+            <p>Manage categories used to organize recipes.</p>
+
+            <Link to="/admin/categories" className="admin-card-button">
+              Manage Categories
+            </Link>
+          </div>
         </section>
       </div>
     </main>

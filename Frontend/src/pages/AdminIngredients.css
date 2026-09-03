@@ -1,0 +1,295 @@
+.admin-ingredients-page {
+  min-height: calc(100vh - 70px);
+  background-color: #f7f3ea;
+  padding: 3rem 2rem;
+}
+
+.admin-ingredients-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.admin-ingredients-header {
+  margin-bottom: 2rem;
+}
+
+.admin-badge {
+  display: inline-block;
+  margin-bottom: 0.7rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  background-color: #e5eadb;
+  color: #315c4c;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.admin-ingredients-header h1 {
+  margin: 0 0 0.5rem;
+  color: #315c4c;
+  font-size: 2.4rem;
+}
+
+.admin-ingredients-header p {
+  margin: 0;
+  color: #6b665d;
+  font-size: 1.05rem;
+}
+
+/* Messages */
+
+.admin-ingredients-error,
+.admin-ingredients-success {
+  margin-bottom: 1.5rem;
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.admin-ingredients-error {
+  background-color: #f8e2dc;
+  color: #b04a3a;
+}
+
+.admin-ingredients-success {
+  background-color: #e5eadb;
+  color: #315c4c;
+}
+
+/* Form card */
+
+.ingredient-form-card {
+  background-color: #fffdf8;
+  border: 1px solid #e5dfd2;
+  border-radius: 18px;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 5px 18px rgba(70, 70, 50, 0.07);
+}
+
+.ingredient-form-card h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #315c4c;
+}
+
+/* Form */
+
+.ingredient-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+}
+
+.ingredient-form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: #4f4a43;
+  font-weight: 600;
+}
+
+.ingredient-form-grid input,
+.ingredient-form-grid select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid #d8d1c4;
+  border-radius: 10px;
+  background-color: #fffdf8;
+  color: #4f4a43;
+  font-size: 0.95rem;
+}
+
+.ingredient-form-grid input:focus,
+.ingredient-form-grid select:focus {
+  outline: none;
+  border-color: #315c4c;
+  box-shadow: 0 0 0 2px rgba(49, 92, 76, 0.1);
+}
+
+/* Form buttons */
+
+.ingredient-form-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.save-ingredient-button,
+.cancel-ingredient-button {
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.save-ingredient-button {
+  background-color: #d9784a;
+  color: white;
+}
+
+.save-ingredient-button:hover {
+  background-color: #c7673b;
+  transform: translateY(-1px);
+}
+
+.cancel-ingredient-button {
+  background-color: #e5dfd2;
+  color: #4f4a43;
+}
+
+.cancel-ingredient-button:hover {
+  background-color: #d8d1c4;
+}
+
+/* Existing ingredients */
+
+.ingredients-list-section h2 {
+  margin-bottom: 1.2rem;
+  color: #315c4c;
+}
+
+.no-ingredients {
+  color: #6b665d;
+}
+
+/* Ingredient list */
+
+.ingredients-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ingredient-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+
+  background-color: #fffdf8;
+  border: 1px solid #e5dfd2;
+  border-radius: 16px;
+  padding: 1.2rem 1.4rem;
+
+  box-shadow: 0 4px 14px rgba(70, 70, 50, 0.06);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.ingredient-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px rgba(70, 70, 50, 0.09);
+}
+
+/* Ingredient information */
+
+.ingredient-info {
+  flex: 1;
+}
+
+.ingredient-info h3 {
+  margin: 0 0 0.35rem;
+  color: #315c4c;
+  font-size: 1.15rem;
+}
+
+.ingredient-info p {
+  margin: 0 0 0.4rem;
+  color: #4f4a43;
+}
+
+.ingredient-info span {
+  color: #6b665d;
+  font-size: 0.9rem;
+}
+
+/* Buttons */
+
+.ingredient-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.edit-ingredient-button,
+.delete-ingredient-button {
+  border: none;
+  border-radius: 9px;
+  padding: 0.6rem 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.edit-ingredient-button {
+  background-color: #e5eadb;
+  color: #315c4c;
+}
+
+.edit-ingredient-button:hover {
+  background-color: #d7dfc8;
+}
+
+.delete-ingredient-button {
+  background-color: #f3d8d0;
+  color: #a94435;
+}
+
+.delete-ingredient-button:hover {
+  background-color: #ecc5ba;
+}
+
+/* Tablet */
+
+@media (max-width: 700px) {
+  .admin-ingredients-page {
+    padding: 2rem 1rem;
+  }
+
+  .ingredient-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ingredient-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .ingredient-actions {
+    width: 100%;
+  }
+
+  .edit-ingredient-button,
+  .delete-ingredient-button {
+    flex: 1;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 500px) {
+  .admin-ingredients-header h1 {
+    font-size: 2rem;
+  }
+
+  .ingredient-form-card {
+    padding: 1.3rem;
+  }
+
+  .ingredient-form-actions {
+    flex-direction: column;
+  }
+
+  .save-ingredient-button,
+  .cancel-ingredient-button {
+    width: 100%;
+  }
+}

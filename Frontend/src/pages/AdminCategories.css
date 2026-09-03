@@ -1,0 +1,262 @@
+.admin-categories-page {
+  min-height: calc(100vh - 70px);
+  background-color: #f7f3ea;
+  padding: 3rem 2rem;
+}
+
+.admin-categories-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Header */
+
+.admin-categories-header {
+  margin-bottom: 2rem;
+}
+
+.admin-badge {
+  display: inline-block;
+  margin-bottom: 0.7rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  background-color: #e5eadb;
+  color: #315c4c;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.admin-categories-header h1 {
+  margin: 0 0 0.5rem;
+  color: #315c4c;
+  font-size: 2.3rem;
+}
+
+.admin-categories-header p {
+  margin: 0;
+  color: #6b665d;
+  font-size: 1.05rem;
+}
+
+/* Messages */
+
+.admin-categories-error,
+.admin-categories-success {
+  margin-bottom: 1.5rem;
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.admin-categories-error {
+  background-color: #f8e3df;
+  color: #a33f32;
+}
+
+.admin-categories-success {
+  background-color: #e5eadb;
+  color: #315c4c;
+}
+
+/* Form card */
+
+.category-form-card {
+  margin-bottom: 2.5rem;
+  padding: 2rem;
+  background-color: #fffdf8;
+  border: 1px solid #e5dfd2;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(70, 70, 50, 0.08);
+}
+
+.category-form-card h2 {
+  margin-top: 0;
+  margin-bottom: 1.3rem;
+  color: #315c4c;
+  font-size: 1.4rem;
+}
+
+.category-form-card label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: #4f4a43;
+  font-weight: 600;
+}
+
+.category-form-card input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.8rem 1rem;
+  border: 1px solid #d8d1c4;
+  border-radius: 10px;
+  background-color: #fffdf8;
+  color: #4f4a43;
+  font-size: 1rem;
+}
+
+.category-form-card input:focus {
+  outline: none;
+  border-color: #315c4c;
+  box-shadow: 0 0 0 3px rgba(49, 92, 76, 0.1);
+}
+
+.category-form-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+}
+
+.save-category-button,
+.cancel-category-button {
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.save-category-button {
+  background-color: #d9784a;
+  color: white;
+}
+
+.save-category-button:hover {
+  background-color: #c7673b;
+}
+
+.cancel-category-button {
+  background-color: #e5dfd2;
+  color: #4f4a43;
+}
+
+.cancel-category-button:hover {
+  background-color: #d8d1c4;
+}
+
+/* Categories list */
+
+.categories-list-section h2 {
+  margin-bottom: 1.2rem;
+  color: #315c4c;
+  font-size: 1.5rem;
+}
+
+.categories-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.2rem 1.3rem;
+  background-color: #fffdf8;
+  border: 1px solid #e5dfd2;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(70, 70, 50, 0.06);
+}
+
+.category-info h3 {
+  margin: 0;
+  color: #315c4c;
+  font-size: 1.1rem;
+}
+
+.category-info p {
+  margin: 0.35rem 0 0;
+  color: #6b665d;
+  font-size: 0.9rem;
+}
+
+.category-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.edit-category-button,
+.delete-category-button {
+  border: none;
+  border-radius: 8px;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.edit-category-button {
+  background-color: #e5eadb;
+  color: #315c4c;
+}
+
+.edit-category-button:hover {
+  background-color: #d7dfca;
+}
+
+.delete-category-button {
+  background-color: #f3d9d3;
+  color: #a33f32;
+}
+
+.delete-category-button:hover {
+  background-color: #eac5bd;
+}
+
+.no-categories {
+  padding: 2rem;
+  text-align: center;
+  color: #6b665d;
+  background-color: #fffdf8;
+  border: 1px solid #e5dfd2;
+  border-radius: 14px;
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+  .admin-categories-page {
+    padding: 2rem 1rem;
+  }
+
+  .admin-categories-header h1 {
+    font-size: 2rem;
+  }
+
+  .category-form-card {
+    padding: 1.5rem;
+  }
+
+  .categories-list {
+    grid-template-columns: 1fr;
+  }
+
+  .category-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .category-actions {
+    width: 100%;
+  }
+
+  .edit-category-button,
+  .delete-category-button {
+    flex: 1;
+  }
+}
+
+@media (max-width: 450px) {
+  .category-form-actions {
+    flex-direction: column;
+  }
+
+  .save-category-button,
+  .cancel-category-button {
+    width: 100%;
+  }
+}

@@ -313,6 +313,34 @@
   text-decoration: underline;
 }
 
+.planned-meal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.8rem;
+}
+
+.view-meal-recipe {
+  display: inline-block;
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  background-color: #d9784a;
+  color: white;
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.view-meal-recipe:hover {
+  background-color: #c7673b;
+}
+
+.planned-meal-actions .remove-meal {
+  margin-top: 0;
+}
+
 @media (max-width: 1000px) {
   .week-grid {
     grid-template-columns: repeat(2, 1fr);

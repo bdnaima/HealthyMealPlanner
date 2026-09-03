@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/api";
+import "./Login.css";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -19,49 +20,69 @@ function Register() {
     try {
       await registerUser(email, password);
 
-      setMessage("Registration successful!");
+      setMessage("Registration successful! Redirecting to login...");
 
       setTimeout(() => {
         navigate("/login");
-      }, 1000);
+      }, 1200);
     } catch (error) {
       setError(error.message);
     }
   }
 
   return (
-    <div>
-      <h1>Create an Account</h1>
-
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email</label>
-
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
+    <main className="auth-page">
+      {" "}
+      <div className="auth-card">
+        {" "}
+        <div className="auth-header">
+          {" "}
+          <span className="auth-icon">🌱</span>
+          <h1>Create an Account</h1>
+          <p>Start planning your meals and make healthy eating easier.</p>
         </div>
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <label>
+            Email
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="you@example.com"
+              required
+            />
+          </label>
 
-        <div>
-          <label>Password</label>
+          <label>
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Create a password"
+              required
+            />
+          </label>
 
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-          />
+          <p className="password-hint">
+            Choose a secure password that you will remember.
+          </p>
+
+          {error && <p className="auth-error">{error}</p>}
+
+          {message && <p className="auth-success">{message}</p>}
+
+          <button type="submit" className="auth-button">
+            Create Account
+          </button>
+        </form>
+        <div className="auth-footer">
+          <p>
+            Already have an account? <Link to="/login">Log in</Link>
+          </p>
         </div>
-
-        <button type="submit">Register</button>
-      </form>
-
-      {message && <p>{message}</p>}
-      {error && <p>{error}</p>}
-    </div>
+      </div>
+    </main>
   );
 }
 

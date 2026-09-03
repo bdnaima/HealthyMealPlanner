@@ -94,3 +94,26 @@
     order: -1;
   }
 }
+.hero-badge {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  background-color: #e5eadb;
+  color: #315c4c;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.admin-home-link {
+  display: inline-block;
+  margin-top: 1.2rem;
+  color: #315c4c;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.admin-home-link:hover {
+  color: #d9784a;
+}

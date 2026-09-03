@@ -1,7 +1,6 @@
 using HealthyMealPlanner.API.Data;
 using HealthyMealPlanner.API.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -25,6 +24,7 @@ public class PlannedMealsController : ControllerBase
     public async Task<ActionResult<IEnumerable<PlannedMeal>>> GetPlannedMeals()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
         if (userId == null)
         {
             return Unauthorized();
@@ -37,44 +37,47 @@ public class PlannedMealsController : ControllerBase
             .ToListAsync();
     }
 
-// POST: api/plannedmeals
-[Authorize]
-[HttpPost]
-public async Task<ActionResult<PlannedMeal>> CreatePlannedMeal(
-    PlannedMeal plannedMeal)
-{
-    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-    if (userId == null)
+    // POST: api/plannedmeals
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult<PlannedMeal>> CreatePlannedMeal(
+        PlannedMeal plannedMeal)
     {
-        return Unauthorized();
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
+        plannedMeal.UserId = userId;
+
+        _context.PlannedMeals.Add(plannedMeal);
+
+        await _context.SaveChangesAsync();
+
+        var createdMeal = await _context.PlannedMeals
+            .Where(pm => pm.PlannedMealId == plannedMeal.PlannedMealId)
+            .Include(pm => pm.Recipe)
+            .ThenInclude(r => r.Category)
+            .FirstOrDefaultAsync();
+
+        return CreatedAtAction(
+            nameof(GetPlannedMeals),
+            new { id = plannedMeal.PlannedMealId },
+            createdMeal
+        );
     }
-
-    plannedMeal.UserId = userId;
-
-    _context.PlannedMeals.Add(plannedMeal);
-
-    await _context.SaveChangesAsync();
-
-    var createdMeal = await _context.PlannedMeals
-        .Where(pm => pm.PlannedMealId == plannedMeal.PlannedMealId)
-        .Include(pm => pm.Recipe)
-        .ThenInclude(r => r.Category)
-        .FirstOrDefaultAsync();
-
-    return CreatedAtAction(
-        nameof(GetPlannedMeals),
-        new { id = plannedMeal.PlannedMealId },
-        createdMeal
-    );
-}
 
     // PUT: api/plannedmeals/5
     [Authorize]
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdatePlannedMeal(int id, PlannedMeal plannedMeal)
+    public async Task<IActionResult> UpdatePlannedMeal(
+        int id,
+        PlannedMeal plannedMeal)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
         if (userId == null)
         {
             return Unauthorized();
@@ -85,28 +88,24 @@ public async Task<ActionResult<PlannedMeal>> CreatePlannedMeal(
             return BadRequest();
         }
 
-        _context.Entry(plannedMeal).State = EntityState.Modified;
+        // Find the existing meal and make sure it belongs to the logged-in user
+        var existingMeal = await _context.PlannedMeals
+            .FirstOrDefaultAsync(pm =>
+                pm.PlannedMealId == id &&
+                pm.UserId == userId);
 
-        try
+        if (existingMeal == null)
         {
-            await _context.SaveChangesAsync();
+            return NotFound();
         }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!PlannedMealExists(id))
-            {
-                return NotFound();
-            }
 
-            throw;
-        }
+        // Update only the fields the user is allowed to change
+        existingMeal.RecipeId = plannedMeal.RecipeId;
+        existingMeal.MealDate = plannedMeal.MealDate;
+
+        await _context.SaveChangesAsync();
 
         return NoContent();
-    }
-
-    private bool PlannedMealExists(int id)
-    {
-        return _context.PlannedMeals.Any(e => e.PlannedMealId == id);
     }
 
     // DELETE: api/plannedmeals/5
@@ -115,12 +114,17 @@ public async Task<ActionResult<PlannedMeal>> CreatePlannedMeal(
     public async Task<IActionResult> DeletePlannedMeal(int id)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
         if (userId == null)
         {
             return Unauthorized();
         }
 
-        var plannedMeal = await _context.PlannedMeals.FindAsync(id);
+        // Find the meal AND make sure it belongs to the logged-in user
+        var plannedMeal = await _context.PlannedMeals
+            .FirstOrDefaultAsync(pm =>
+                pm.PlannedMealId == id &&
+                pm.UserId == userId);
 
         if (plannedMeal == null)
         {
@@ -128,8 +132,10 @@ public async Task<ActionResult<PlannedMeal>> CreatePlannedMeal(
         }
 
         _context.PlannedMeals.Remove(plannedMeal);
+
         await _context.SaveChangesAsync();
 
         return NoContent();
     }
+
 }

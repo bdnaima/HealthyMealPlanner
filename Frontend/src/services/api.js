@@ -144,24 +144,6 @@ export async function loginUser(email, password) {
     return data;
 }
 
-export async function testAuth() {
-    const token = localStorage.getItem("token");
-
-    const response = await fetch(`${API_URL}/account`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-
-    const data = await response.text();
-
-    if (!response.ok) {
-        throw new Error(data || "Authentication failed");
-    }
-
-    return data;
-}
-
 // Get Planned Meals
 export async function getPlannedMeals(token) {
     const response = await fetch(`${API_URL}/plannedmeals`, {
@@ -223,6 +205,66 @@ export async function getCategories() {
     }
 
     return response.json();
+}
+
+export async function createCategory(category, token) {
+    const response = await fetch(
+        `${API_URL}/categories`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(category),
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to create category.");
+    }
+
+    return response.json();
+}
+
+
+export async function updateCategory(id, category, token) {
+    const response = await fetch(
+        `${API_URL}/categories/${id}`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(category),
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to update category.");
+    }
+
+    return response.status === 204
+        ? null
+        : response.json();
+}
+
+
+export async function deleteCategory(id, token) {
+    const response = await fetch(
+        `${API_URL}/categories/${id}`,
+        {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to delete category.");
+    }
 }
 
 // Get all foods
@@ -322,6 +364,25 @@ export async function deleteFood(id, token) {
     }
 }
 
+
+// Get all recipe ingredients
+export async function getRecipeIngredients(token) {
+    const response = await fetch(
+        `${API_URL}/recipeingredients`,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch recipe ingredients.");
+    }
+
+    return response.json();
+}
+
 // Create a Recipe Ingredient
 export async function createRecipeIngredient(
     ingredient,
@@ -346,14 +407,47 @@ export async function createRecipeIngredient(
     return response.json();
 }
 
+
+// Update a Recipe Ingredient
+export async function updateRecipeIngredient(id, ingredient, token) {
+    const response = await fetch(
+        `http://localhost:5169/api/recipeingredients/${id}`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                recipeIngredientId: Number(id),
+                recipeId: Number(ingredient.recipeId),
+                foodId: Number(ingredient.foodId),
+                quantity: ingredient.quantity
+                    ? Number(ingredient.quantity)
+                    : null,
+                unit: ingredient.unit || null,
+            }),
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to update ingredient.");
+    }
+
+    return response.status === 204
+        ? null
+        : response.json();
+}
+
+
 // Delete a Recipe Ingredient
 export async function deleteRecipeIngredient(id, token) {
     const response = await fetch(
-        `${API_URL}/recipeingredients/${id}`,
+        `${API_URL} /recipeingredients/${id} `,
         {
             method: "DELETE",
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token} `,
             },
         }
     );
