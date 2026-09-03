@@ -15,6 +15,7 @@ function MealPlanner() {
   const [selectedRecipe, setSelectedRecipe] = useState("");
   const [addingForDate, setAddingForDate] = useState(null);
   const [recipes, setRecipes] = useState([]);
+  const [weekOffset, setWeekOffset] = useState(0);
   const [error, setError] = useState("");
 
   const token = localStorage.getItem("token");
@@ -96,6 +97,8 @@ function MealPlanner() {
 
   monday.setDate(today.getDate() + difference);
 
+  monday.setDate(monday.getDate() + weekOffset * 7);
+
   // Create the seven days of the week
   const weekDays = Array.from({ length: 7 }, (_, index) => {
     const date = new Date(monday);
@@ -127,6 +130,47 @@ function MealPlanner() {
       </div>
 
       {error && <p className="error-message">{error}</p>}
+
+      <div className="week-navigation">
+        <button
+          type="button"
+          onClick={() => setWeekOffset((current) => current - 1)}
+        >
+          ← Previous Week
+        </button>
+
+        <div className="week-title">
+          <h2>
+            {weekDays[0].toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+            })}
+            {" – "}
+            {weekDays[6].toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })}
+          </h2>
+
+          {weekOffset !== 0 && (
+            <button
+              type="button"
+              className="today-button"
+              onClick={() => setWeekOffset(0)}
+            >
+              Back to This Week
+            </button>
+          )}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setWeekOffset((current) => current + 1)}
+        >
+          Next Week →
+        </button>
+      </div>
 
       <div className="week-grid">
         {weekDays.map((date, index) => {
