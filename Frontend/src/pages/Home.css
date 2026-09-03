@@ -11,6 +11,7 @@
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 4rem;
+  border-bottom: 1px solid rgba(65, 65, 65, 0.869);
 }
 
 .hero-content {
